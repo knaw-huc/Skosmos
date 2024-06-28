@@ -116,6 +116,52 @@ To stop:
 
     docker compose down
 
+## Running with docker compose for GraphDB
+
+The `docker compose` provided configuration will prepare three containers.
+The first one called `graphdb`, which uses the GraphDB image,
+and starts a container with 2 GB of memory. The
+`docker compose` service name of this container is `graphdb`.
+
+The second container is the `graphdb-cache`, a Varnish Cache container. It sits
+between the `graphdb` and the `skosmos` (more on this below). The
+Varnish Cache container is pre-configured to intercept queries to `graphdb:7200`
+keeping the results `gzipped` in the cache for one week.
+
+The last container created is `skosmos`, using the same image mentioned
+in the [previous section](#running-with-docker). The only difference being
+that we bind a new Skosmos configuration `config/config-docker-compose-graphdb.ttl`
+on `/var/www/html/config.ttl`.
+
+This `config-docker-compose-graphdb.ttl` file uses `http://graphdb-cache:80/repositories/skosmos`
+as `skosmos:sparqlEndpoint`, forcing `skosmos` to go through the `graphdb-cache`
+for a better performance. You can customize this example setup to start Skosmos
+pointing to any other existing GraphDB server, preferably with the Lucene connector
+
+To configure the GraphDB repository to make use of the Lucene connector,
+please run the `graphdb.rq` SPARQL query in GraphDB. This will configure
+the triples which GraphDB should index with Lucene.
+
+**NOTE**: `graphdb:7200` and `graphdb-cache:80` are from the internal Docker network.
+To the host machine Docker Compose is exposing these values as `localhost:7200`
+and `localhost:9031` respectively. The default host port numbers can be overriden
+by setting `SKOSMOS_PORT`, `GRAPHDB_PORT`, and `CACHE_PORT` env variables in an
+`.env` file. This is useful when running multiple Skosmos Docker Compose instances
+on the same host but with different port numbers.
+
+To create the containers in this example setup, you can use this command
+from the parent directory (where `docker-compose-graphdb.yml` is located):
+
+    docker compose -f docker-compose-graphdb.yml up -d
+
+Now Skosmos should be available at `http://localhost:9090/` from your
+host. See the [section below](#loading-vocabulary-data) to load vocabulary data.
+
+To stop:
+
+    docker compose -f docker-compose-graphdb.yml down
+
+
 ## Loading vocabulary data
 
 After you have your container running, with either Docker or `docker compose`,

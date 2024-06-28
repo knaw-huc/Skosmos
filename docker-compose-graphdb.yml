@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  graphdb:
+    hostname: graphdb
+    image: ontotext/graphdb:10.6.4
+    environment:
+      GDB_JAVA_OPTS: >-
+        -Xmx2g 
+        -Xms1g
+        -Dgraphdb.home=/opt/graphdb/home
+        -Dgraphdb.workbench.cors.enable=true
+        -Dgraphdb.append.request.id.headers=true
+        -Denable-context-index=true
+        -Dentity-pool-implementation=transactional
+        -Dhealth.max.query.time.seconds=500
+        -Dreuse.vars.in.subselects=true
+    ports:
+      - ${GRAPHDB_PORT:-7200}:7200
+    # volumes:
+      # - /where-to-store-data:/opt/graphdb/home
+      # - /where-to-store-data-for-import:/root/graphdb-import
+  graphdb-cache:
+    hostname: graphdb-cache
+    image: varnish
+    ports:
+      - ${CACHE_PORT:-9031}:80
+    volumes:
+      - type: bind
+        source: ./dockerfiles/config/varnish-graphdb.vcl
+        target: /etc/varnish/default.vcl
+  skosmos:
+    hostname: skosmos
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.ubuntu
+    ports:
+      - ${SKOSMOS_PORT:-9090}:80
+    depends_on:
+      - graphdb
+      - graphdb-cache
+    volumes:
+      - type: bind
+        source: ./dockerfiles/config/config-docker-compose-graphdb.ttl
+        target: /var/www/html/config.ttl
