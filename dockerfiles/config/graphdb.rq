@@ -7,7 +7,8 @@ INSERT DATA {
     {
       "fieldName": "prefLabel",
       "propertyChain": [
-        "http://www.w3.org/2004/02/skos/core#prefLabel"
+        "http://www.w3.org/2004/02/skos/core#prefLabel" ,
+        "http://www.w3.org/2004/02/skos/core#definition"
       ],
       "indexed": true,
       "stored": false,
@@ -44,6 +45,18 @@ INSERT DATA {
       "fieldName": "notation",
       "propertyChain": [
         "http://www.w3.org/2004/02/skos/core#notation"
+      ],
+      "indexed": true,
+      "stored": false,
+      "analyzed": true,
+      "multivalued": true,
+      "ignoreInvalidValues": false,
+      "facet": false
+    },
+    {
+      "fieldName": "definition",
+      "propertyChain": [
+        "http://www.w3.org/2004/02/skos/core#definition"
       ],
       "indexed": true,
       "stored": false,
