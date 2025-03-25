@@ -1,7 +1,6 @@
 [![CI tests](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml/badge.svg)](https://github.com/NatLibFi/Skosmos/actions/workflows/ci.yml)
 [![Test Coverage](https://codeclimate.com/github/NatLibFi/Skosmos/badges/coverage.svg)](https://codeclimate.com/github/NatLibFi/Skosmos/coverage)
 [![Code Climate](https://codeclimate.com/github/NatLibFi/Skosmos/badges/gpa.svg)](https://codeclimate.com/github/NatLibFi/Skosmos)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/NatLibFi/Skosmos/?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NatLibFi_Skosmos&metric=alert_status)](https://sonarcloud.io/dashboard?id=NatLibFi_Skosmos)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/NatLibFi/Skosmos.svg)](http://isitmaintained.com/project/NatLibFi/Skosmos "Percentage of issues still open")
@@ -23,7 +22,7 @@ Skosmos is used as a basis for the [Finto](http://finto.fi) vocabulary service.
 The latest development version is also available at 
 [dev.finto.fi](http://dev.finto.fi).
 
-Skosmos is implemented using PHP (supported versions: 7.3, 7.4 and 8.0), with 
+Skosmos is implemented using PHP (supported versions: 8.0 and 8.1), with 
 Twig templates and e.g. jQuery and jsTree used to build the web interface, and 
 EasyRdf for SPARQL and RDF data access. 
 
